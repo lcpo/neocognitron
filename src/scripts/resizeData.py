@@ -11,5 +11,6 @@ for folder, subfolders, contents in os.walk(PATH_TO_DATA):
 	else: continue
 	for content in contents:
 		img = cv.imread(PATH_TO_DATA + folderName + '/' + content)
-		cropImg = img[0:900, 150:1050]
-		cv.imwrite(PATH_TO_DATA + folderName + '/' + content, cropImg)
+		smallImg = cv.resize(img, (0,0), fx=0.05, fy=0.05) 
+		cv.imwrite(PATH_TO_DATA + folderName + '/' + content, smallImg)
+		

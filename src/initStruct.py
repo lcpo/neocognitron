@@ -4,7 +4,7 @@ class InitStruct(object):
 	def __init__(self):
 		NUM_LAYERS = 4
 
-		S_LAYER_SIZES = [19, 21, 13, 3]
+		S_LAYER_SIZES = [45, 21, 13, 3]
 		C_LAYER_SIZES = [21, 13, 7, 1]
 
 		S_PLANES_PER_LAYER = [12, 38, 35, 26]

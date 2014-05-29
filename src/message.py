@@ -8,8 +8,17 @@ class Message(object):
 		self.size = initSize
 		self.outputs = np.empty((numPlanes, size, size))
 
+	def setPlaneOutput(plane, outputs):
+		outputs[plane] = outputs
+
 	def setOneOutput(self, plane, x, y, val):
 		outputs[plane][x][y] = val
+
+	def getPointsOnPLanes(x, y):
+		output = []
+		for plane in xrange(self.numPlanes):
+			output.append(self.outputs[plane][x][y])
+		return output
 
 	def getWindows(self, x, y, windowSize):
 		output = np.empty((numPlanes, (pow(windowSize, 2))))

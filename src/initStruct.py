@@ -3,6 +3,7 @@ class InitStruct(object):
 
 	def __init__(self):
 		NUM_LAYERS = 4
+		INPUT_LAYER_SIZE = 45
 
 		S_LAYER_SIZES = [45, 21, 13, 3]
 		C_LAYER_SIZES = [21, 13, 7, 1]

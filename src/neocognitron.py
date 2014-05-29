@@ -1,22 +1,34 @@
 import sLayer
 import cLayer
+import message
 
 class Neocognitron(object):
 
-	numLayers = 0
-	sLayers = None
-	cLayers = None
-
 	def __init__(self, init):
 
-		numLayers = init.NUM_LAYERS
-		sLayers = []
-		cLayers = []
+		self.numLayers = init.NUM_LAYERS
+		self.sLayers = []
+		self.cLayers = []
+		self.init = init
 
 		for layer in xrange(numLayers):
 			sLayers.append(sLayer.SLayer(layer, init))
 			cLayers.append(cLayer.CLayer(layer, init))
 
 	def propagate(self, image, train):
+		output = message.Message(1, self.init.INPUT_LAYER_SIZE)
+		output.setPlaneOutput(image)
+		for layer in xrange(self.numLayers):
+			output = self.sLayers[layer].propagate(output, train)
+			output = self.cLayers[layer].propagate(output)
+		result = self.determineOutput(output.getPointsOnPlanes(0, 0))
+		return result
 
-		
+	def determineOutput(out):
+		maxVal = 0
+		index = -1
+		for i in xrange(len(out)):
+			if out[i] > maxVal:
+				maxVal = out[i]
+				index = i
+		return index

@@ -1,7 +1,6 @@
 import random
 import cv2 as cv 
 import neocognitron
-import initStruct
 
 FILES_PER_CLASS = 55
 TRAIN_PER_CLASS = 35
@@ -15,28 +14,32 @@ class Trainer(object):
 		self.crossVal = crossVal
 		self.out = outFile
 
-	def run(self, loops):
-		#figure out init 
-		init = initStruct.InitStruct()
+	def train(self, init, loops):
 		network = neocognitron.Neocognitron(init)
 		trainFiles = random.sample(range(1, FILES_PER_CLASS), TRAIN_PER_CLASS)
 		inputs = self.getInputs(trainFiles)
 		for n in xrange(loops * len(inputs)):
 				network.propagate(inputs[n % len(inputs)][0], True)
+		return network
 
-	def crossVal(self, loops):
-		#figure out init 
-		init = initStruct.InitStruct()
-		for k in xrange(K_FOLD):
+	def crossVal(self, init, loops):
+		numCorrect = 0
+		numTotal = 0	
+		filesPerFold = FILES_PER_CLASS/K_FOLD
+		for k in xrange(K_FOLD):			
 			network = neocognitron.Neocognitron(init)
-			trainFiles = random.sample(range(1, FILES_PER_CLASS), TRAIN_PER_CLASS)
-			inputs = self.getInputs(trainFiles)
-			for n in xrange(loops * len(inputs)):
-				network.propagate(inputs[n % len(inputs)][0], True)
-			#get others and validate 
-
-
-
+			trainFiles = range(filesPerFold*k, filesPerFold*(k+1)) 
+			trainInputs = self.getInputs(trainFiles)
+			for n in xrange(loops * len(trainInputs)):
+				network.propagate(trainInputs[n % len(trainInputs)][0], True)
+			validateFiles = list(set(range(1, FILES_PER_CLASS)).symmetric_difference(trainFiles))
+			validateInputs = self.getInputs(validateFiles)
+			for n in xrange(len(validateInputs)):
+				guess = network.propagate(validateInputs[n][0], False)
+				guess = ALPHABET[guess]
+				if guess == validateInputs[n][1]: numCorrect += 1
+				numTotal += 1
+		return float(numCorrect)/numTotal
 
 	def getInputs(self, trainFiles):
 		inputs = []

@@ -8,7 +8,7 @@ IMG_SIZE = 45
 FILES_PER_CLASS = 55
 TRAIN_PER_CLASS = 35
 K_FOLD = 5
-NUM_LOOPS = 5
+NUM_LOOPS = 2
 ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 PATH_TO_SAVED = '../saved/param/'
 DATA_DIR = '../data/'
@@ -32,8 +32,9 @@ def crossVal(init, loops):
 		trainFiles = range(filesPerFold*k, filesPerFold*(k+1)) 
 		trainInputs = getInputs(trainFiles)
 		print 'TRAINING'
-		for n in xrange(loops * len(trainInputs)):
+		for n in xrange(loops * len(trainInputs)):			
 			network.propagate(trainInputs[n % len(trainInputs)][0], True)
+			print '\tTRAINED ' + str(n+1) + ' of ' + str(loops * len(trainInputs))
 		print 'DONE TRAINING'
 		validateFiles = list(set(range(1, FILES_PER_CLASS)).symmetric_difference(trainFiles))
 		validateInputs = getInputs(validateFiles)
@@ -69,7 +70,7 @@ def runParameterSearch():
 	init = initStruct.InitStruct()
 	for i in xrange(1, 501):		
 		print 'PARAM SEARCH NUM: ' + str(i)			
-		init.randomize()			
+		init.randomize()
 		error = crossVal(init, NUM_LOOPS)
 		print 'ERROR FOR NUM ' + str(i) + ' : ' + str(error)
 		if error < minError:				

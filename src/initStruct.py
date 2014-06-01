@@ -19,8 +19,7 @@ class InitStruct(object):
 		self.S_LAYER_SIZES = [19, 21, 13, 3]
 		self.C_LAYER_SIZES = [21, 13, 7, 1]
 
-		self.S_PLANES_PER_LAYER = [12, 38, 35, 26]
-		self.C_PLANES_PER_LAYER = [8, 19, 23, 26]
+		self.PLANES_PER_LAYER = [12, 38, 35, 26]
 
 		self.S_WINDOW_SIZE = [3, 9, 12, 10]
 		self.C_WINDOW_SIZE = [3, 9, 9, 5]
@@ -68,8 +67,7 @@ class InitStruct(object):
 
 		# Planes per Layer 
 		for i in xrange(3):
-			self.S_PLANES_PER_LAYER[i] = random.choice(self.PLANE_RANGE[i])
-			self.C_PLANES_PER_LAYER[i] = random.choice(self.PLANE_RANGE[i])
+			self.PLANES_PER_LAYER[i] = random.choice(self.PLANE_RANGE[i])
 
 		# Window Size 
 		for i in xrange(0, 4):

@@ -14,7 +14,7 @@ class Message(object):
 	def setOneOutput(self, plane, x, y, val):
 		self.outputs[plane][x][y] = val
 
-	def getPointsOnPLanes(self, x, y):
+	def getPointsOnPlanes(self, x, y):
 		output = []
 		for plane in xrange(self.numPlanes):
 			output.append(self.outputs[plane][x][y])
@@ -79,6 +79,10 @@ class Message(object):
 				for y in xrange(sColumn.shape[2]):
 					if sColumn[plane][x][y] > maxVal:
 						maxL = location.Location(plane, x, y)
+		offset = (windowSize - windowSize%2)/2
+		if maxL != None:
+			x, y = maxL.getPoint()
+			maxL.setPoint(x+center[0]-offset, y+center[1]-offset)
 		return maxL
 
 	def getSingleOutput(self, location):
@@ -86,14 +90,14 @@ class Message(object):
 
 	def getMaxPerPlane(self, plane, points):
 		p = None
-		maxVal = 0 
+		maxVal = -float('inf') 
 		for point in points:
 			temp = point
 			if temp == None: p = None
-			elif temp.getPlane() == plane:
+			elif temp.getPlane() == plane:				
 				if self.getSingleOutput(temp) > maxVal:
 					maxVal = self.getSingleOutput(temp)
-					p = temp.getPoint()
+					p = temp.getPoint()		
 		return p
 
 	def getRepresentatives(self, windowSize):
@@ -110,7 +114,6 @@ class Message(object):
 					temp = self.getLocationOfMax(sColumn, (x, y), windowSize)
 					if temp is not None and temp not in points:
 						points.append(temp)
-
 		reps = []
 		for plane in xrange(self.numPlanes):
 			reps.append(self.getMaxPerPlane(plane, points))

@@ -7,7 +7,7 @@ class CCell(object):
 		self.d = d
 
 	def propagate(self, inputs, vInput):
-		d = numpy.empty((len(inputs)))
+		d = np.empty((len(inputs)))
 		d.fill(self.d)
 		output = np.dot(d, inputs)
 

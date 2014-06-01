@@ -24,7 +24,7 @@ class Neocognitron(object):
 		result = self.determineOutput(output.getPointsOnPlanes(0, 0))
 		return result
 
-	def determineOutput(out):
+	def determineOutput(self, out):
 		maxVal = 0
 		index = -1
 		for i in xrange(len(out)):

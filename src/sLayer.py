@@ -8,7 +8,7 @@ class SLayer(object):
 
 	def __init__(self, layer, initStruct):
 		self.size = initStruct.S_LAYER_SIZES[layer]
-		self.numPlanes = initStruct.S_PLANES_PER_LAYER[layer]
+		self.numPlanes = initStruct.PLANES_PER_LAYER[layer]
 		self.windowSize = initStruct.S_WINDOW_SIZE[layer]
 		self.columnSize = initStruct.S_COLUMN_SIZE[layer]
 
@@ -23,7 +23,7 @@ class SLayer(object):
 		if layer == 0: 
 			prev = 1
 		else: 
-			prev = initStruct.C_PLANES_PER_LAYER[layer - 1]
+			prev = initStruct.PLANES_PER_LAYER[layer - 1]
 
 		self.initA(prev)
 		self.initB()
@@ -54,7 +54,7 @@ class SLayer(object):
 		for x in xrange(self.size):
 			for y in xrange(self.size):
 				windows = inputs.getWindows(x, y, self.windowSize)
-				self.vCells[x][y].propagate(windows)
+				vOutput[x][y] = self.vCells[x][y].propagate(windows)
 				for plane in xrange(self.numPlanes):
 					val = self.sCells[plane][x][y].propagate(windows, vOutput[x][y], self.b[plane], self.a[plane])
 					output.setOneOutput(plane, x, y, val)
@@ -67,13 +67,14 @@ class SLayer(object):
 		weightLength = pow(self.windowSize, 2)
 		representatives = output.getRepresentatives(self.columnSize)
 		for plane in xrange(self.numPlanes):
-			p = representatives[plane]
-			delta = self.q * vOutput[p[0]][p[1]]
-			b[plane] += delta
-			for ck in self.a[plane].size:
-				prev = inputs.getOneWindow(ck, p[0], p[1], self.windowSize)
-				for weight in weightLength:
-					delta = q * self.c[weight] * prev[weight]
-					a[plane][ck][weight] += delta
+			if representatives[plane] != None:
+				p = representatives[plane]
+				delta = self.q * vOutput[p[0]][p[1]]
+				self.b[plane] += delta
+				for ck in xrange(self.a[plane].shape[0]):
+					prev = inputs.getOneWindow(ck, p[0], p[1], self.windowSize)
+					for weight in xrange(weightLength):
+						delta = self.q * self.c * prev[weight]
+						self.a[plane][ck][weight] += delta
 
 

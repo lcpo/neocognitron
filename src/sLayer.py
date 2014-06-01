@@ -37,10 +37,10 @@ class SLayer(object):
 					self.sCells[plane][x][y] = sCell.SCell(self.r)
 
 	def initA(self, prev):
-		self.a = np.empty((self.numPlanes, prev, pow(self.size, 2)))
+		self.a = np.empty((self.numPlanes, prev, pow(self.windowSize, 2)))
 		for k in xrange(self.numPlanes):
 			for ck in xrange(prev):
-				for w in xrange(pow(self.size, 2)):
+				for w in xrange(pow(self.windowSize, 2)):
 					self.a[k][ck][w] = random.random()*.4
 
 	def initB(self):
@@ -63,12 +63,12 @@ class SLayer(object):
 			output = self.propagate(inputs, False)
 		return output
 
-	def train(inputs, output, vOutput):
+	def train(self, inputs, output, vOutput):
 		weightLength = pow(self.windowSize, 2)
 		representatives = output.getRepresentatives(self.columnSize)
-		for plane in xrange(numPlanes):
-			p = representatives(plane)
-			delta = q * vOutput[p[0]][p[1]]
+		for plane in xrange(self.numPlanes):
+			p = representatives[plane]
+			delta = self.q * vOutput[p[0]][p[1]]
 			b[plane] += delta
 			for ck in self.a[plane].size:
 				prev = inputs.getOneWindow(ck, p[0], p[1], self.windowSize)

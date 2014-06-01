@@ -7,12 +7,18 @@ class Location(object):
 		self.x = x
 		self.y = y
 
-	def getPlane():
+	def getPlane(self):
 		return self.plane
 
-	def getPoint():
+	def getPoint(self):
 		return (self.x, self.y)
 
-	def setPoint(x, y):
+	def setPoint(self, x, y):
 		self.x = x
 		self.y = y
+
+	def getX(self):
+		return self.x
+
+	def getY(self):
+		return self.y

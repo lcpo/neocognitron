@@ -10,17 +10,15 @@ class SCell(object):
 		output = 0.0
 
 		for cell in xrange(inputs.shape[0]):
-			print a.shape
-			print inputs.shape
 			output += np.dot(a[cell], inputs[cell])
 
-		denom = (r/r+1) * b * vInput
+		denom = (self.r/self.r+1) * b * vInput
 
 		output = (output/denom) - 1.0
 
 		output = max(0.0, output)
 
-		output *= r
+		output *= self.r
 		
 		return output
 

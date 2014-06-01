@@ -12,9 +12,9 @@ class Message(object):
 		self.outputs[plane] = toSet
 
 	def setOneOutput(self, plane, x, y, val):
-		outputs[plane][x][y] = val
+		self.outputs[plane][x][y] = val
 
-	def getPointsOnPLanes(x, y):
+	def getPointsOnPLanes(self, x, y):
 		output = []
 		for plane in xrange(self.numPlanes):
 			output.append(self.outputs[plane][x][y])
@@ -49,13 +49,13 @@ class Message(object):
 					count += 1
 		return output
 
-	def getSquareWindows(x, y, windowSize):
+	def getSquareWindows(self, x, y, windowSize):
 		out = np.empty((self.numPlanes, windowSize, windowSize))
-		for plane in numPlanes:
+		for plane in xrange(self.numPlanes):
 			out[plane] = self.getOneSquareWindow(plane, x, y, windowSize)
 		return out
 
-	def getOneSquareWindow(plane, x, y, windowSize):
+	def getOneSquareWindow(self, plane, x, y, windowSize):
 		out = np.empty((windowSize, windowSize))
 		if windowSize == self.size:
 			for smallx in xrange(self.size):
@@ -63,12 +63,15 @@ class Message(object):
 					out[smallx][smally] = self.outputs[plane][smallx][smally]
 		else:
 			offset = (windowSize - 1)/2
-			for smallx in xrange(self.size - offset):
-				for smally in xrange(self.size - offset):
-					out[x-smallx+offset][y-smally+offset] = outputs[plane][smallx][smally]
+			for smallx in xrange(x - offset, x + offset):
+				for smally in xrange(y - offset, y + offset):
+					try: 
+						out[x-smallx+offset][y-smally+offset] = self.outputs[plane][smallx][smally]
+					except Exception:
+						out[x-smallx+offset][y-smally+offset] = 0.
 		return out 
 
-	def getLocationOfMax(sColumn, center, windowSize):
+	def getLocationOfMax(self, sColumn, center, windowSize):
 		maxL = None
 		maxVal = 0
 		for plane in xrange(sColumn.shape[0]):
@@ -78,10 +81,10 @@ class Message(object):
 						maxL = location.Location(plane, x, y)
 		return maxL
 
-	def getSingleOutput(location):
+	def getSingleOutput(self, location):
 		return self.outputs[location.getPlane()][location.getX()][location.getY()]
 
-	def getMaxPerPlane(plane, points):
+	def getMaxPerPlane(self, plane, points):
 		p = None
 		maxVal = 0 
 		for point in points:
@@ -93,7 +96,7 @@ class Message(object):
 					p = temp.getPoint()
 		return p
 
-	def getRepresentatives(windowSize):
+	def getRepresentatives(self, windowSize):
 		points = []
 		offset = (windowSize - 1)/2
 		if windowSize == self.size:
@@ -109,7 +112,7 @@ class Message(object):
 						points.append(temp)
 
 		reps = []
-		for plane in self.numPlanes:
+		for plane in xrange(self.numPlanes):
 			reps.append(self.getMaxPerPlane(plane, points))
 		return reps
 

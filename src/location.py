@@ -1,6 +1,6 @@
 
 
-class Location(Object):
+class Location(object):
 
 	def __init__(self, plane, x, y):
 		self.plane = plane

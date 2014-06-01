@@ -11,13 +11,13 @@ class Neocognitron(object):
 		self.cLayers = []
 		self.init = init
 
-		for layer in xrange(numLayers):
-			sLayers.append(sLayer.SLayer(layer, init))
-			cLayers.append(cLayer.CLayer(layer, init))
+		for layer in xrange(self.numLayers):
+			self.sLayers.append(sLayer.SLayer(layer, init))
+			self.cLayers.append(cLayer.CLayer(layer, init))
 
 	def propagate(self, image, train):
 		output = message.Message(1, self.init.INPUT_LAYER_SIZE)
-		output.setPlaneOutput(image)
+		output.setPlaneOutput(0, image)
 		for layer in xrange(self.numLayers):
 			output = self.sLayers[layer].propagate(output, train)
 			output = self.cLayers[layer].propagate(output)

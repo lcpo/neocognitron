@@ -9,7 +9,9 @@ class SCell(object):
 	def propagate(self, inputs, vInput, b, a):
 		output = 0.0
 
-		for cell in inputs:
+		for cell in xrange(inputs.shape[0]):
+			print a.shape
+			print inputs.shape
 			output += np.dot(a[cell], inputs[cell])
 
 		denom = (r/r+1) * b * vInput

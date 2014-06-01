@@ -6,10 +6,10 @@ class Message(object):
 	def __init__(self, planes, initSize):
 		self.numPlanes = planes
 		self.size = initSize
-		self.outputs = np.empty((numPlanes, size, size))
+		self.outputs = np.empty((self.numPlanes, self.size, self.size))
 
-	def setPlaneOutput(plane, outputs):
-		outputs[plane] = outputs
+	def setPlaneOutput(self, plane, toSet):
+		self.outputs[plane] = toSet
 
 	def setOneOutput(self, plane, x, y, val):
 		outputs[plane][x][y] = val
@@ -21,25 +21,32 @@ class Message(object):
 		return output
 
 	def getWindows(self, x, y, windowSize):
-		output = np.empty((numPlanes, (pow(windowSize, 2))))
-		for plane in xrange(numPlanes):
-			output[plane] = getOneWindow(plane, x, y, windowSize)
+		output = np.empty((self.numPlanes, (pow(windowSize, 2))))
+		for plane in xrange(self.numPlanes):
+			output[plane] = self.getOneWindow(plane, x, y, windowSize)
 		return output
 
 	def getOneWindow(self, plane, x, y, windowSize):
 		output = np.empty((pow(windowSize, 2)))
-		if windowSize == size:
+		if windowSize == self.size:
+			count = 0 
 			for i in xrange(windowSize):
 				for j in xrange(windowSize):	
-					output.append(outputs[plane][i][j])
+					output[count] = self.outputs[plane][i][j]
+					count += 1
 		else:
 			startX = x - (windowSize/2)
 			startY = y - (windowSize/2)
 			endX = x + (windowSize/2)
 			endY = y + (windowSize/2)
-			for i in xrange(startX, endX+1):
-				for j in xrange(startY, endY+1):
-					output.append(outputs[plane][i][j])
+			count = 0
+			for i in xrange(startX, endX):
+				for j in xrange(startY, endY):
+					try:
+						output[count] = self.outputs[plane][i][j]
+					except Exception:
+						output[count] = 0.
+					count += 1
 		return output
 
 	def getSquareWindows(x, y, windowSize):
@@ -50,7 +57,7 @@ class Message(object):
 
 	def getOneSquareWindow(plane, x, y, windowSize):
 		out = np.empty((windowSize, windowSize))
-		if windowSize = self.size:
+		if windowSize == self.size:
 			for smallx in xrange(self.size):
 				for smally in xrange(self.size):
 					out[smallx][smally] = self.outputs[plane][smallx][smally]

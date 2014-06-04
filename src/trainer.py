@@ -43,8 +43,8 @@ def getTrainFile(init, layer, plane):
 				img = cv.imread(path + content, flags=cv.CV_LOAD_IMAGE_GRAYSCALE)
 				for x in xrange(img.shape[0]):
 					for y in xrange(img.shape[1]):
-						if img[x][y] == OFF: img[x][y] == ON
-						if img[x][y] == ON: img[x][y] == OFF
+						if img[x][y] == OFF: img[x][y] = ON
+						elif img[x][y] == ON: img[x][y] = OFF
 				output.append(img)
 	return output
 
@@ -91,6 +91,10 @@ def getInputs(trainFiles):
 				numZeros = 2
 			fileName = letter + '-' + '0'*numZeros + str(fileNum) + '.png'						
 			img = cv.imread(DATA_DIR + letter+ '/' + fileName, flags=cv.CV_LOAD_IMAGE_GRAYSCALE)
+			for x in xrange(img.shape[0]):
+					for y in xrange(img.shape[1]):
+						if img[x][y] == OFF: img[x][y] = ON
+						elif img[x][y] == ON: img[x][y] = OFF
 			inputs.append((img, letter))
 	random.shuffle(inputs)
 	return inputs

@@ -36,3 +36,7 @@ class Neocognitron(object):
 				maxVal = out[i]
 				index = i
 		return index
+
+	def trainLayer(self, layer, trainTemplates):
+		self.sLayers[layer].train(trainTemplates)
+

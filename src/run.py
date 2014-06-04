@@ -1,3 +1,3 @@
 import trainer
 
-trainer.runParameterSearch()
+trainer.runTraining()

@@ -8,7 +8,8 @@ class InitStruct(object):
 ##########################################################################
 #                        DON'T CHANGE THESE                              #
 ##########################################################################
-		self.NUM_LAYERS = 4
+		# self.NUM_LAYERS = 4
+		self.NUM_LAYERS = 3
 		self.INPUT_LAYER_SIZE = 45
 		
 		
@@ -16,29 +17,34 @@ class InitStruct(object):
 #                              VARIABLE                                  #
 ##########################################################################		
 
-		self.S_LAYER_SIZES = [19, 21, 13, 3]
-		self.C_LAYER_SIZES = [21, 13, 7, 1]
+		# self.S_LAYER_SIZES = [19, 21, 13, 3]
+		# self.C_LAYER_SIZES = [21, 13, 7, 1]
+		self.S_LAYER_SIZES = [19, 21, 13]
+		self.C_LAYER_SIZES = [21, 13, 1]
 
-		self.PLANES_PER_LAYER = [12, 38, 35, 26]
+		# self.PLANES_PER_LAYER = [12, 38, 35, 26]
+		self.PLANES_PER_LAYER = [12, 28, 26]
 
-		self.S_WINDOW_SIZE = [3, 9, 12, 10]
-		self.C_WINDOW_SIZE = [3, 9, 9, 5]
+		self.S_WINDOW_SIZE = [3, 9, 20]
+		self.C_WINDOW_SIZE = [3, 9, 9]
 
 		self.S_COLUMN_SIZE = [3, 9, 9, 5]
 
 		# Q -> speed of reinforcement 
-		self.Q = [.1, 16, 16, 16]
+		self.Q = [5, 16, 16, 16]
 
 		# R -> efficiency of inhibitory signals
 		self.R = [4, 1.5, 1.5, 1.5]
 
 		# C -> strength of the fixed excitatory connections for V cells 
 		# monotonically decreasing in size of receptive field 
-		self.C = [.6, .2, .06, .04]
+		# self.C = [.6, .2, .06, .04]
+		self.C = [.6, .24, .06]
 
 		# D -> strength of the fixed excitatory connections for C cells 
 		# monotonically decreasing in size of receptive field 
-		self.D = [.6, .2, .06, .04]
+		# self.D = [.6, .2, .06, .04]
+		self.D = [.6, .24, .06]
 
 	def makeRanges(self):
 		try: 

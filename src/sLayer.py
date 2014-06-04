@@ -3,6 +3,7 @@ import message
 import random
 import vsCell
 import sCell
+import trainer
 
 class SLayer(object):
 
@@ -48,7 +49,7 @@ class SLayer(object):
 		for k in xrange(self.numPlanes):
 			self.b[k] = 0.
 
-	def propagate(self, inputs, train):
+	def propagate(self, inputs):
 		output = message.Message(self.numPlanes, self.size)
 		vOutput = np.empty((self.size, self.size))
 		for x in xrange(self.size):
@@ -58,23 +59,45 @@ class SLayer(object):
 				for plane in xrange(self.numPlanes):
 					val = self.sCells[plane][x][y].propagate(windows, vOutput[x][y], self.b[plane], self.a[plane])
 					output.setOneOutput(plane, x, y, val)
-		if train:
-			self.train(inputs, output, vOutput)
-			output = self.propagate(inputs, False)
+		# if train:
+		# 	self.train(inputs, output, vOutput)
+		# 	output = self.propagate(inputs, False)
 		return output
 
-	def train(self, inputs, output, vOutput):
+	def seedPropagate(self, inputs):
+		x = self.size/2
+		y = x
+		windows = inputs.getWindows(x, y, self.windowSize)
+		vOutput = self.vCells[x][y].propagate(windows)
+		output = np.empty((self.numPlanes))
+		for plane in xrange(self.numPlanes):		
+			sOutput = self.sCells[plane][x][y].propagate(windows, vOutput, self.b[plane], self.a[plane])
+			output[plane] = sOutput
+		return output, vOutput
+			
+	def adjustWeights(self, inputs, output, vOutput):
 		weightLength = pow(self.windowSize, 2)
-		representatives = output.getRepresentatives(self.columnSize)
+		x = self.size/2
+		y = x
 		for plane in xrange(self.numPlanes):
-			if representatives[plane] != None:
-				p = representatives[plane]
-				delta = self.q * vOutput[p[0]][p[1]]
-				self.b[plane] += delta
-				for ck in xrange(self.a[plane].shape[0]):
-					prev = inputs.getOneWindow(ck, p[0], p[1], self.windowSize)
+			delta = self.q * vOutput
+			self.b[plane] += delta
+			for ck in xrange(self.a[plane].shape[0]):
+					prev = inputs.getOneWindow(ck, x, y, self.windowSize)
 					for weight in xrange(weightLength):
 						delta = self.q * self.c * prev[weight]
 						self.a[plane][ck][weight] += delta
+
+	def train(self, trainTemplates):
+		for example in xrange(trainer.MAX_PER_PLANE):
+			inputs = message.Message(self.numPlanes, self.windowSize)
+			for plane in xrange(len(trainTemplates)):
+				print plane, example
+				inputs.setPlaneOutput(plane, trainTemplates[plane][example])
+			output, vOutput = self.seedPropagate(inputs)
+			self.adjustWeights(inputs, output, vOutput)
+
+
+		
 
 

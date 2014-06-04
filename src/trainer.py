@@ -3,6 +3,8 @@ import cv2 as cv
 import neocognitron
 import initStruct
 import numpy as np
+import message
+import os
 
 IMG_SIZE = 45
 FILES_PER_CLASS = 55
@@ -12,18 +14,34 @@ NUM_LOOPS = 2
 ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 PATH_TO_SAVED = '../saved/param/'
 DATA_DIR = '../data/'
+TRAIN_DATA_DIR = '../data/training/'
+MAX_PER_PLANE = 7
 
 
-def train(init, loops):
+def train(init):
 	network = neocognitron.Neocognitron(init)
-	trainFiles = random.sample(range(1, FILES_PER_CLASS), TRAIN_PER_CLASS)
-	inputs = getInputs(trainFiles)
-	print 'TRAINING'
-	for n in xrange(loops * len(inputs)):
-		network.propagate(inputs[n % len(inputs)][0], True)
-		print '\tTRAINED ' + str(n+1) + ' of ' + str(loops * len(trainInputs))
-	print 'DONE TRAINING'
+	for layer in xrange(init.NUM_LAYERS):
+		trainTemplates = []
+		for plane in xrange(init.PLANES_PER_LAYER[layer]):
+			trainTemplates.append(getTrainFile(init, layer, plane))
+		print "TRAINING LAYER " + str(layer + 1)
+		network.trainLayer(layer, trainTemplates)
 	return network
+
+
+def getTrainFile(init, layer, plane):
+	imageSize = init.S_WINDOW_SIZE[layer]
+	layer = layer + 1
+	plane = plane + 1
+	output = []
+	path = TRAIN_DATA_DIR + 'layer' + str(layer) + '/' + str(plane) + '/'
+	for folder, subfolders, contents in os.walk(path):
+		for content in contents:
+			if not content[0] == '.':
+				img = cv.imread(path + content, flags=cv.CV_LOAD_IMAGE_GRAYSCALE)
+				output.append(img)
+	return output
+
 
 def crossVal(init, loops):
 	numCorrect = 0
@@ -66,9 +84,7 @@ def getInputs(trainFiles):
 			else:
 				numZeros = 2
 			fileName = letter + '-' + '0'*numZeros + str(fileNum) + '.png'						
-			img = cv.imread(DATA_DIR + letter+ '/' + fileName)
-			img = np.delete(img, (1, 2), 2)			
-			img = img.reshape((IMG_SIZE,IMG_SIZE))
+			img = cv.imread(DATA_DIR + letter+ '/' + fileName, flags=cv.CV_LOAD_IMAGE_GRAYSCALE)
 			inputs.append((img, letter))
 	random.shuffle(inputs)
 	return inputs
@@ -93,7 +109,7 @@ def testFunctionality():
 
 def runTraining():
 	init = initStruct.InitStruct()
-	network = train(init, NUM_LOOPS)
+	network = train(init)
 	#save network ? 
 	return network
 					

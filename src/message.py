@@ -106,7 +106,7 @@ class Message(object):
 		if windowSize == self.size:
 			sColumn = self.getSquareWindows(self.size/2, self.size/2, windowSize)
 			temp = self.getLocationOfMax(sColumn, (self.size/2, self.size/2), windowSize)
-			points.append[temp]
+			points.append(temp)
 		else:
 			for x in xrange(self.size-offset):
 				for y in xrange(self.size - offset):

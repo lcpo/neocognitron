@@ -21,13 +21,17 @@ class Neocognitron(object):
 		for layer in xrange(self.numLayers):
 			output = self.sLayers[layer].propagate(output, train)
 			output = self.cLayers[layer].propagate(output)
-		result = self.determineOutput(output.getPointsOnPlanes(0, 0))
-		return result
+		if not train: 
+			result = self.determineOutput(output.getPointsOnPlanes(0, 0))
+			return result
 
 	def determineOutput(self, out):
+		print "---- DETERMINING OUTPUT -------"
 		maxVal = 0
 		index = -1
 		for i in xrange(len(out)):
+			print "INDEX: " + str(i)
+			print "VALUE: " + str(out[i])
 			if out[i] > maxVal:
 				maxVal = out[i]
 				index = i

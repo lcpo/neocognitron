@@ -18,8 +18,11 @@ def train(init, loops):
 	network = neocognitron.Neocognitron(init)
 	trainFiles = random.sample(range(1, FILES_PER_CLASS), TRAIN_PER_CLASS)
 	inputs = getInputs(trainFiles)
+	print 'TRAINING'
 	for n in xrange(loops * len(inputs)):
-			network.propagate(inputs[n % len(inputs)][0], True)
+		network.propagate(inputs[n % len(inputs)][0], True)
+		print '\tTRAINED ' + str(n+1) + ' of ' + str(loops * len(trainInputs))
+	print 'DONE TRAINING'
 	return network
 
 def crossVal(init, loops):
@@ -34,7 +37,7 @@ def crossVal(init, loops):
 		print 'TRAINING'
 		for n in xrange(loops * len(trainInputs)):			
 			network.propagate(trainInputs[n % len(trainInputs)][0], True)
-			print '\tTRAINED ' + str(n+1) + ' of ' + str(loops * len(trainInputs))
+			if ((n+1)%10 == 0): print '\tTRAINED ' + str(n+1) + ' of ' + str(loops * len(trainInputs))
 		print 'DONE TRAINING'
 		validateFiles = list(set(range(1, FILES_PER_CLASS)).symmetric_difference(trainFiles))
 		validateInputs = getInputs(validateFiles)
@@ -42,9 +45,14 @@ def crossVal(init, loops):
 		for n in xrange(len(validateInputs)):
 			guess = network.propagate(validateInputs[n][0], False)
 			guess = ALPHABET[guess]
+			print '\t=> ' + str(guess)
+			print '\t<= ' + str(validateInputs[n][1])
 			if guess == validateInputs[n][1]: numCorrect += 1
 			numTotal += 1
-		print 'DONE VALIDATING'
+		print 'DONE VALIDATING K=' + str(k+1)
+		print 'NUM CORRECT: ' + str(numCorrect)
+		print 'OF ' + str(numTotal)
+		print 'CURRENT PERCENTAGE: ' + str(float(numCorrect)/numTotal)
 	return 1.0 - float(numCorrect)/numTotal
 
 def getInputs(trainFiles):
@@ -78,6 +86,9 @@ def runParameterSearch():
 			print '--------NEW BEST ' + str(minError) + '----------'
 			init.pickle(PATH_TO_SAVED + error + '.init')
 
+def testFunctionality():
+	numCorrect = 0
+	numTotal = 0
 
 
 def runTraining():

@@ -91,11 +91,15 @@ class SLayer(object):
 	def train(self, trainTemplates):
 		for example in xrange(trainer.MAX_PER_PLANE):
 			inputs = message.Message(self.numPlanes, self.windowSize)
+			OK = True
 			for plane in xrange(len(trainTemplates)):
-				print plane, example
-				inputs.setPlaneOutput(plane, trainTemplates[plane][example])
-			output, vOutput = self.seedPropagate(inputs)
-			self.adjustWeights(inputs, output, vOutput)
+				try: 
+					inputs.setPlaneOutput(plane, trainTemplates[plane][example])
+				except Exception:
+					OK = False
+			if OK:
+				output, vOutput = self.seedPropagate(inputs)
+				self.adjustWeights(inputs, output, vOutput)
 
 
 		

@@ -19,7 +19,7 @@ class SCell(object):
 		output = max(0.0, output)
 
 		output *= self.r
-		
+
 		return output
 
 

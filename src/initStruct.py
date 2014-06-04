@@ -31,7 +31,7 @@ class InitStruct(object):
 		self.S_COLUMN_SIZE = [3, 9, 9, 5]
 
 		# Q -> speed of reinforcement 
-		self.Q = [5, 16, 16, 16]
+		self.Q = [5, 10, 10, 16]
 
 		# R -> efficiency of inhibitory signals
 		self.R = [4, 1.5, 1.5, 1.5]
@@ -62,27 +62,27 @@ class InitStruct(object):
 		self.makeRanges()
 
 		# Layer sizes
-		self.S_LAYER_SIZES = list()
-		self.C_LAYER_SIZES = list()
-		self.S_LAYER_SIZES.append(random.choice(self.LAYER_RANGE[0]))
-		for i in xrange(1, 4):
-			choice = random.choice(self.LAYER_RANGE[i])
-			self.S_LAYER_SIZES.append(choice)
-			self.C_LAYER_SIZES.append(choice)
-		self.C_LAYER_SIZES.append(1)
+		# self.S_LAYER_SIZES = list()
+		# self.C_LAYER_SIZES = list()
+		# self.S_LAYER_SIZES.append(random.choice(self.LAYER_RANGE[0]))
+		# for i in xrange(1, 4):
+		# 	choice = random.choice(self.LAYER_RANGE[i])
+		# 	self.S_LAYER_SIZES.append(choice)
+		# 	self.C_LAYER_SIZES.append(choice)
+		# self.C_LAYER_SIZES.append(1)
 
 		# Planes per Layer 
-		for i in xrange(3):
-			self.PLANES_PER_LAYER[i] = random.choice(self.PLANE_RANGE[i])
+		# for i in xrange(3):
+		# 	self.PLANES_PER_LAYER[i] = random.choice(self.PLANE_RANGE[i])
 
 		# Window Size 
-		for i in xrange(0, 4):
-			self.S_WINDOW_SIZE[i] = random.choice(self.WINDOW_RANGE[i])
-			self.C_WINDOW_SIZE[i] = random.choice(self.WINDOW_RANGE[i])
+		# for i in xrange(0, 4):
+		# 	self.S_WINDOW_SIZE[i] = random.choice(self.WINDOW_RANGE[i])
+		# 	self.C_WINDOW_SIZE[i] = random.choice(self.WINDOW_RANGE[i])
 		
 		# Column Size 
-		for i in xrange(0, 4):
-			self.S_COLUMN_SIZE[i] = random.choice(self.COLUMN_RANGE[i])
+		# for i in xrange(0, 4):
+		# 	self.S_COLUMN_SIZE[i] = random.choice(self.COLUMN_RANGE[i])
 
 		# Q 
 		self.Q[0] = random.uniform(.05, .75)
@@ -99,13 +99,13 @@ class InitStruct(object):
 		self.C[0] = random.uniform(.4, .8)
 		self.C[1] = random.uniform(.09 , (1.0 - self.C[0])/2)
 		self.C[2] = random.uniform(.05, (1.0 - self.C[0] - self.C[1])/2)
-		self.C[3] = (1.0 - self.C[0] - self.C[1] - self.C[2])/2
+		# self.C[3] = (1.0 - self.C[0] - self.C[1] - self.C[2])/2
 
 		# D 
 		self.D[0] = random.uniform(.4, .8)
 		self.D[1] = random.uniform(.09 , (1.0 - self.D[0])/2)
 		self.D[2] = random.uniform(.05, (1.0 - self.D[0] - self.D[1])/2)
-		self.D[3] = (1.0 - self.D[0] - self.D[1] - self.D[2])/2
+		# self.D[3] = (1.0 - self.D[0] - self.D[1] - self.D[2])/2
 
 
 

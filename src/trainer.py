@@ -16,6 +16,8 @@ PATH_TO_SAVED = '../saved/param/'
 DATA_DIR = '../data/'
 TRAIN_DATA_DIR = '../data/training/'
 MAX_PER_PLANE = 7
+ON = 0.
+OFF = 255.
 
 
 def train(init):
@@ -39,6 +41,10 @@ def getTrainFile(init, layer, plane):
 		for content in contents:
 			if not content[0] == '.':
 				img = cv.imread(path + content, flags=cv.CV_LOAD_IMAGE_GRAYSCALE)
+				for x in xrange(img.shape[0]):
+					for y in xrange(img.shape[1]):
+						if img[x][y] == OFF: img[x][y] == ON
+						if img[x][y] == ON: img[x][y] == OFF
 				output.append(img)
 	return output
 
@@ -102,9 +108,22 @@ def runParameterSearch():
 			print '--------NEW BEST ' + str(minError) + '----------'
 			init.pickle(PATH_TO_SAVED + error + '.init')
 
-def testFunctionality():
+def validate(network):
 	numCorrect = 0
 	numTotal = 0
+	validateInputs = getInputs(range(FILES_PER_CLASS))
+	print 'TESTING'
+	for n in xrange(len(validateInputs)):
+			guess = network.propagate(validateInputs[n][0], False)
+			guess = ALPHABET[guess]			
+			print '\t<= ' + str(validateInputs[n][1])
+			print '\t=> ' + str(guess)
+			if guess == validateInputs[n][1]: numCorrect += 1
+			numTotal += 1
+			print 'NUM CORRECT: ' + str(numCorrect)
+			print 'OF ' + str(numTotal)
+			print 'CURRENT PERCENTAGE: ' + str(float(numCorrect)/numTotal)
+
 
 
 def runTraining():

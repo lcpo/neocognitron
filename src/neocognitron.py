@@ -2,6 +2,8 @@ import sLayer
 import cLayer
 import message
 
+ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
 class Neocognitron(object):
 
 	def __init__(self, init):
@@ -19,7 +21,7 @@ class Neocognitron(object):
 		output = message.Message(1, self.init.INPUT_LAYER_SIZE)
 		output.setPlaneOutput(0, image)
 		for layer in xrange(self.numLayers):
-			output = self.sLayers[layer].propagate(output, train)
+			output = self.sLayers[layer].propagate(output)
 			output = self.cLayers[layer].propagate(output)
 		if not train: 
 			result = self.determineOutput(output.getPointsOnPlanes(0, 0))
@@ -30,8 +32,7 @@ class Neocognitron(object):
 		maxVal = 0
 		index = -1
 		for i in xrange(len(out)):
-			print "INDEX: " + str(i)
-			print "VALUE: " + str(out[i])
+			print ALPHABET[i], str(out[i]) 
 			if out[i] > maxVal:
 				maxVal = out[i]
 				index = i

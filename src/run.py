@@ -1,3 +1,4 @@
 import trainer
 
-trainer.runTraining()
+network = trainer.runTraining()
+trainer.validate(network)

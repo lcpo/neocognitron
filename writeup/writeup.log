@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  5 JUN 2014 00:42
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  5 JUN 2014 02:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -339,28 +339,87 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 9.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+<firstLayer.png, id=15, 392.46625pt x 299.1175pt>
+File: firstLayer.png Graphic file (type png)
+ <use firstLayer.png>
+Package pdftex.def Info: firstLayer.png used on input line 56.
+(pdftex.def)             Requested size: 256.0748pt x 195.17715pt.
 
+<secondLayer.png, id=17, 500.87125pt x 302.12875pt>
+File: secondLayer.png Graphic file (type png)
+ <use secondLayer.png>
+Package pdftex.def Info: secondLayer.png used on input line 63.
+(pdftex.def)             Requested size: 256.0748pt x 154.47087pt.
+
+<thirdLayer.png, id=18, 301.125pt x 301.125pt>
+File: thirdLayer.png Graphic file (type png)
+ <use thirdLayer.png>
+Package pdftex.def Info: thirdLayer.png used on input line 70.
+(pdftex.def)             Requested size: 256.0748pt x 256.09988pt.
+ [3]
+Overfull \hbox (29.09935pt too wide) in paragraph at lines 85--95
+\OML/cmm/m/it/12 http \OT1/cmr/m/n/12 : \OML/cmm/m/it/12 ==www:cs:princeton:edu
+=courses=archive=spr\OT1/cmr/m/n/12 08\OML/cmm/m/it/12 =cos\OT1/cmr/m/n/12 598\
+OML/cmm/m/it/12 B=Readings=Fukushima\OT1/cmr/m/n/12 1980\OML/cmm/m/it/12 :pdf$ 
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 85--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 85--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 85--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 85--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 85--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 85--95
+
+ []
+
+[4 <./firstLayer.png> <./secondLayer.png>] [5 <./thirdLayer.png>]
 (./writeup.aux) ) 
 Here is how much of TeX's memory you used:
- 4422 strings out of 493315
- 61122 string characters out of 6137904
- 151308 words of memory out of 5000000
- 7821 multiletter control sequences out of 15000+600000
+ 4439 strings out of 493315
+ 61404 string characters out of 6137904
+ 152308 words of memory out of 5000000
+ 7834 multiletter control sequences out of 15000+600000
  9238 words of font info for 35 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,6n,26p,1712b,147s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,7n,26p,1712b,225s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
-12.pfb>
-Output written on writeup.pdf (3 pages, 84400 bytes).
+cm/cmmi6.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.
+pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
+></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+
+Output written on writeup.pdf (5 pages, 206925 bytes).
 PDF statistics:
- 38 PDF objects out of 1000 (max. 8388607)
- 26 compressed objects within 1 object stream
+ 67 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

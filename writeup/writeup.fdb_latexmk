@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1401954122 "writeup.tex" "writeup.pdf" "writeup" 1401954123
+["pdflatex"] 1401961481 "writeup.tex" "writeup.pdf" "writeup" 1401961482
   "/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii" 1337017135 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/etexcmds.sty" 1335995445 7612 c47308d923ec19888707b0f1792b326a ""
   "/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/ifluatex.sty" 1303254447 7324 11d14f318d865f420e692d4e6c9c18c3 ""
@@ -38,8 +38,11 @@
   "/usr/local/texlive/2013/texmf-dist/tex/latex/relsize/relsize.sty" 1369619135 15542 c4cc3164fe24f2f2fbb06eb71b1da4c4 ""
   "/usr/local/texlive/2013/texmf-dist/tex/latex/tools/multicol.sty" 1312409015 26766 56c30c5bea3083b5a0d6fc2ce0063096 ""
   "/usr/local/texlive/2013/texmf-dist/tex/latex/tools/xspace.sty" 1312409015 4405 b7f0681f78908bf1aa3cd73228e9fd38 ""
-  "writeup.aux" 1401954123 271 d5ba3e694a01be7b90fabd04ddf6cd9b ""
-  "writeup.tex" 1401954121 7534 36781cfe369d7a04f8f01d71392182d4 ""
+  "firstLayer.png" 1401961442 41248 33871c5f1b950ad7c259772831aff77c ""
+  "secondLayer.png" 1401958690 301298 74ca42ef184aeabf7a261447d0874c95 ""
+  "thirdLayer.png" 1401958968 180711 4ad2fb0756ded25d9346840ca7be1ae6 ""
+  "writeup.aux" 1401961482 800 5ecef3c0aab9cbf2e696122728e2bc3c ""
+  "writeup.tex" 1401961480 11342 cb1a205efe67b6936e72097e2aa92542 ""
   (generated)
   "writeup.log"
   "writeup.pdf"

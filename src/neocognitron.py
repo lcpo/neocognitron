@@ -1,6 +1,7 @@
 import sLayer
 import cLayer
 import message
+import numpy as np
 
 ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -21,10 +22,10 @@ class Neocognitron(object):
 		output = message.Message(1, self.init.INPUT_LAYER_SIZE)
 		output.setPlaneOutput(0, image)
 		for layer in xrange(self.numLayers):
-			output = self.sLayers[layer].propagate(output)
+			output = self.sLayers[layer].propagate(output, False)
 			output = self.cLayers[layer].propagate(output)
-			print "C LAYER " + str(layer+1)
-			output.display()
+			# print "C LAYER " + str(layer+1)
+			# output.display()
 		if not train: 
 			result = self.determineOutput(output.getPointsOnPlanes(0, 0))
 			return result
@@ -41,5 +42,17 @@ class Neocognitron(object):
 		return index
 
 	def trainLayer(self, layer, trainTemplates):
-		self.sLayers[layer].train(trainTemplates)
+		inputs = message.Message(self.init.PLANES_PER_LAYER[layer], self.init.S_WINDOW_SIZE[layer])
+		for example in xrange(len(trainTemplates[0])):
+			for i in xrange(self.init.PLANES_PER_LAYER[layer]):
+				try:
+					toSet = np.array(trainTemplates[i][example])
+				except Exception:
+					toSet = np.zeros((self.init.S_WINDOW_SIZE[layer], self.init.S_WINDOW_SIZE[layer]))
+				inputs.setPlaneOutput(i, toSet)
+			output = None
+			for k in xrange(layer):
+				output = self.sLayers[k].propagate(inputs, False)
+				output = self.cLayers[k].propagate(output)
+			self.sLayers[layer].train(trainTemplates)
 

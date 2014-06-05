@@ -6,7 +6,7 @@ class Message(object):
 	def __init__(self, planes, initSize):
 		self.numPlanes = planes
 		self.size = initSize
-		self.outputs = np.empty((self.numPlanes, self.size, self.size))
+		self.outputs = np.zeros((self.numPlanes, self.size, self.size))
 
 	def display(self):
 		for plane in xrange(self.numPlanes):
@@ -26,18 +26,21 @@ class Message(object):
 		return output
 
 	def getWindows(self, x, y, windowSize):
-		output = np.empty((self.numPlanes, (pow(windowSize, 2))))
+		output = np.zeros((self.numPlanes, (pow(windowSize, 2))))
 		for plane in xrange(self.numPlanes):
 			output[plane] = self.getOneWindow(plane, x, y, windowSize)
 		return output
 
 	def getOneWindow(self, plane, x, y, windowSize):
-		output = np.empty((pow(windowSize, 2)))
+		output = np.zeros((pow(windowSize, 2)))
 		if windowSize == self.size:
 			count = 0 
 			for i in xrange(windowSize):
 				for j in xrange(windowSize):	
-					output[count] = self.outputs[plane][i][j]
+					try:
+						output[count] = self.outputs[plane][i][j]
+					except Exception:
+						output[count] = 0.
 					count += 1
 		else:
 			startX = x - (windowSize/2)
@@ -55,13 +58,13 @@ class Message(object):
 		return output
 
 	def getSquareWindows(self, x, y, windowSize):
-		out = np.empty((self.numPlanes, windowSize, windowSize))
+		out = np.zeros((self.numPlanes, windowSize, windowSize))
 		for plane in xrange(self.numPlanes):
 			out[plane] = self.getOneSquareWindow(plane, x, y, windowSize)
 		return out
 
 	def getOneSquareWindow(self, plane, x, y, windowSize):
-		out = np.empty((windowSize, windowSize))
+		out = np.zeros((windowSize, windowSize))
 		if windowSize == self.size:
 			for smallx in xrange(self.size):
 				for smally in xrange(self.size):

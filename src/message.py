@@ -8,6 +8,11 @@ class Message(object):
 		self.size = initSize
 		self.outputs = np.empty((self.numPlanes, self.size, self.size))
 
+	def display(self):
+		for plane in xrange(self.numPlanes):
+			print 'PLANE: ' + str(plane+1)
+			print self.outputs[plane]
+
 	def setPlaneOutput(self, plane, toSet):
 		self.outputs[plane] = toSet
 

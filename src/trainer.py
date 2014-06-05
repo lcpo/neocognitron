@@ -44,7 +44,7 @@ def getTrainFile(init, layer, plane):
 				for x in xrange(img.shape[0]):
 					for y in xrange(img.shape[1]):
 						if img[x][y] == OFF: img[x][y] = ON
-						elif img[x][y] == ON: img[x][y] = OFF
+						elif img[x][y] == ON: img[x][y] = 1.
 				output.append(img)
 	return output
 
@@ -94,7 +94,7 @@ def getInputs(trainFiles):
 			for x in xrange(img.shape[0]):
 					for y in xrange(img.shape[1]):
 						if img[x][y] == OFF: img[x][y] = ON
-						elif img[x][y] == ON: img[x][y] = OFF
+						elif img[x][y] == ON: img[x][y] = 1.
 			inputs.append((img, letter))
 	random.shuffle(inputs)
 	return inputs
@@ -118,6 +118,7 @@ def validate(network):
 	validateInputs = getInputs(range(FILES_PER_CLASS))
 	print 'TESTING'
 	for n in xrange(len(validateInputs)):
+			print 'TESTING LETTER ' + validateInputs[n][1]
 			guess = network.propagate(validateInputs[n][0], False)
 			guess = ALPHABET[guess]			
 			print '\t<= ' + str(validateInputs[n][1])

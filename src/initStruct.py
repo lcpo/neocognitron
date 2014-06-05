@@ -1,5 +1,7 @@
 import cPickle as pickle
 import random
+import math
+import numpy as np
 
 class InitStruct(object):
 
@@ -36,15 +38,61 @@ class InitStruct(object):
 		# R -> efficiency of inhibitory signals
 		self.R = [4, 1.5, 1.5, 1.5]
 
+		self.gamma = [.11, .42, .06]
+		self.delta = [.49, .87, .52]
+		self.delta_bar = [.39, .68, .39]
+
+		self.generateC()
+		self.generateD()
+
 		# C -> strength of the fixed excitatory connections for V cells 
 		# monotonically decreasing in size of receptive field 
 		# self.C = [.6, .2, .06, .04]
-		self.C = [.6, .24, .06]
+		# self.C = [.6, .24, .06]
 
 		# D -> strength of the fixed excitatory connections for C cells 
 		# monotonically decreasing in size of receptive field 
 		# self.D = [.6, .2, .06, .04]
-		self.D = [.6, .24, .06]
+		# self.D = [.6, .24, .06]
+
+	def generateC(self):	
+		self.C = []
+		self.C.append(self.generateMonotonic(self.gamma[0], self.S_WINDOW_SIZE[0], 1, True))
+		for i in xrange(1, self.NUM_LAYERS):
+			self.C.append(self.generateMonotonic(self.gamma[i], self.S_WINDOW_SIZE[i], self.PLANES_PER_LAYER[i-1], True))
+
+	def generateD(self):	
+		self.D = []
+		for i in xrange(self.NUM_LAYERS):
+			self.D.append(self.generateMonotonic(self.delta[i], self.C_WINDOW_SIZE[i], self.PLANES_PER_LAYER[i], False))
+			for w in xrange(self.D[i].shape[0]):
+				self.D[i][w] = self.D[i][w]*self.delta_bar[i]
+
+	def distance(self, a, b):
+		d = 0
+		d += pow(a[0] - b[0], 2)
+		d += pow(a[1] - b[1], 2)
+		d = math.sqrt(d)
+		return d
+
+	def generateMonotonic(self, base, size, planes, norm):	
+		output = np.empty((pow(size, 2)))
+		center = (float(size) - 1)/2
+		center = (center, center)
+		index = 0
+		for x in xrange(size):
+			for y in xrange(size):
+				output[index] = pow(base, self.distance(center, (x, y)))
+				index += 1
+		if norm:
+			total = 0
+			for w in xrange(output.shape[0]):
+				total += output[w]
+			mult = float(1)/(planes * total)
+			for w in xrange(output.shape[0]):
+				output[w] = output[w]*mult
+		return output
+
 
 	def makeRanges(self):
 		try: 

@@ -80,12 +80,12 @@ class SLayer(object):
 		x = self.size/2
 		y = x
 		for plane in xrange(self.numPlanes):
-			delta = self.q * vOutput
+			delta = self.q/2 * vOutput
 			self.b[plane] += delta
 			for ck in xrange(self.a[plane].shape[0]):
 					prev = inputs.getOneWindow(ck, x, y, self.windowSize)
 					for weight in xrange(weightLength):
-						delta = self.q * self.c * prev[weight]
+						delta = self.q * self.c[weight] * prev[weight]
 						self.a[plane][ck][weight] += delta
 
 	def train(self, trainTemplates):

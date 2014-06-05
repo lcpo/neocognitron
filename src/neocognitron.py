@@ -23,6 +23,8 @@ class Neocognitron(object):
 		for layer in xrange(self.numLayers):
 			output = self.sLayers[layer].propagate(output)
 			output = self.cLayers[layer].propagate(output)
+			print "C LAYER " + str(layer+1)
+			output.display()
 		if not train: 
 			result = self.determineOutput(output.getPointsOnPlanes(0, 0))
 			return result
@@ -32,7 +34,7 @@ class Neocognitron(object):
 		maxVal = 0
 		index = -1
 		for i in xrange(len(out)):
-			print ALPHABET[i], str(out[i]) 
+			# print ALPHABET[i], str(out[i]) 
 			if out[i] > maxVal:
 				maxVal = out[i]
 				index = i

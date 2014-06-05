@@ -7,9 +7,7 @@ class CCell(object):
 		self.d = d
 
 	def propagate(self, inputs, vInput):
-		d = np.empty((len(inputs)))
-		d.fill(self.d)
-		output = np.dot(d, inputs)
+		output = np.dot(self.d, inputs)
 
 		output = max(0.0, output)
 		output = output/(1 + output)
